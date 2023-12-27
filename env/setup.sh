@@ -10,8 +10,7 @@ set -eu -o pipefail
 
 here=$(dirname $0)
 
-path=$(nix-build $here -A path --no-out-link)
 activationPackage=$(nix-build $here -A activationPackage --no-out-link)
 
-nix-env -ir $path
+nix-env -ir $activationPackage/home-path
 $activationPackage/activate

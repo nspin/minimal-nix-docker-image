@@ -7,7 +7,7 @@
 # STATEFUL ?= $(if $(findstring Linux,$(shell uname -s)),0,1)
 STATEFUL ?= 1
 
-work_root := ../..
+work_root := .
 
 id := rust-sel4
 label := $(id)

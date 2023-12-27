@@ -22,17 +22,22 @@ RUN rm -r /nix-support
 
 RUN chmod 1777 /tmp /var/tmp
 
-RUN nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs && nix-channel --update
+RUN set -eux; \
+    nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs; \
+    nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager; \
+    nix-channel --update
 
 COPY env/ /tmp/env/
 
-# TODO do this with docker run because otherwise docker run using this image can be slow
+# TODO
+# Do this with docker run because otherwise docker run using this image can be
+# slow when the VOLUME directive below is present.
 RUN d=/tmp/env && bash $d/setup.sh && rm -r $d
 
-# TODO combines with above to make slow
+# TODO combines with above to make docker run slow.
 # VOLUME /nix
 
 WORKDIR /work
 
 # FROM bootstrap
-# WORKDIR /work/hacking/docker
+# WORKDIR /work
